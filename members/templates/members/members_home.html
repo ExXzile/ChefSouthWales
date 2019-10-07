@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<img src="{% static 'members.png' %}" class="image-fluid" id="bg"/>
+<div id="home-section">
+    <div class="container text-right">
+        <h1 class="display-4 text-white text-lg-left mt-5">Members Portal</h1>
+        <hr style="border: 0.5px solid white;"/>
+
+        <div class="d-flex justify-content-end row-hl mt-0">
+            <div class="item-hl mr-2"><a class="btn btn-info py-1" href="{% url 'profile' %}" onclick="">Profile</a></div>
+            <div class="item-hl mr-2"><a class="btn btn-info py-1" href="{% url 'invoices' %}" onclick="">Invoices</a></div>
+            <div class="item-hl mr-2"><a class="btn btn-info py-1" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout </a></div>
+        </div>
+
+
+        <form id="logout" method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="hidden" />
+        </form>
+
+    </div>
+    <div class="container" style="opacity: 0.9;">
+        <div class="row m-0" style="font-size: 0.81rem">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 text-dark bg-white my-3 px-4 py-3" style="border: 1px solid cyan; box-shadow: 0px 1px 18px 3px #a1a1a1;">
+            <h1 class="display-4 mb-3">Jobs:</h1>
+            <hr style="border: 0.5px solid dark;"/>
+
+                {% for job in jobs.all reversed %}
+
+                <h1 class="display-5 mb-0" style="font-size: 1.1rem;">{{ job.client.name }} - {{ job.job_role }} - £{{ job.job_pay_rate }}/{{ job.job_pay_period }}</h1>
+                <a href="{{ job.google_maps }}" class="text-info" target="_blank">{{ job.client.address }}</a>
+                <p class="my-2">{{ job.job_desc | linebreaksbr }}</p>
+
+                <p>{{ job.job_status | safe }}<strong>Start Date: {{ job.job_start_date }}</strong></p>
+                <hr style="border: 0.5px solid muted;"/>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <div class="container text-center text-lg-left">
+        <img src="{% static 'logo.png' %}" width=240 class="mx-4 mb-5">
+    </div>
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<img src="{% static 'members.png' %}" class="image-fluid" id="bg"/>
+<div id="home-section">
+    <div class="container">
+        <h1 class="display-4 text-white text-sm-left mt-5">Members Portal</h1>
+        <hr style="border: 0.5px solid white;"/>
+        <form method="POST" action="{% url 'members_login' %}">
+            {% csrf_token %}
+            {{ captcha }}
+
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 px-0">
+                <h1 class="display-4 text-info text-lg-left my-3" style="font-size: 1.8rem;">Login:</h1>
+                <form class="text-left">
+                    <div class="form-group">
+                        <input class="form-control border-info" type="text" name="username" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control border-info" type="password" name="password" placeholder="Password">
+                    </div>
+
+                    {% if error %}
+                    <p class="text-danger mb-3"> - {{ error }}</p>
+                    {% endif %}
+
+                    <div>
+                        <input type="submit" class="btn btn-info my-3" value="Login">
+                    </div>
+                </form>
+            </div>
+
+
+        </form>
+    </div>
+
+
+    <div class="container text-center text-lg-left">
+        <img src="{% static 'logo.png' %}" width=240 class="mx-4 my-5">
+    </div>
+
+</div>
+
+{% endblock %}

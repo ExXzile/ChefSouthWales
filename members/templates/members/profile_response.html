@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<section id="id_captcha">
+    {{ captcha }}
+</section>
+
+<img src="{% static 'members.png' %}" class="image-fluid" id="bg"/>
+<div id="home-section">
+    <div class="container text-right">
+        <h1 class="display-4 text-white text-lg-left mt-5">Member Profile</h1>
+        <hr style="border: 0.5px solid white;"/>
+    </div>
+    <div class="container" style="opacity: 0.9;">
+        <div class="row m-0 my-5" style="font-size: 0.9rem">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-6 text-center d-flex align-items-center" style="border:1px solid cyan; box-shadow: 0px 1px 18px 3px #a1a1a1;">
+                <div class="container">
+
+                    {% if response %}
+                    <h1 class="display-4 text-white align-middle mt-5" style="font-size: 2.1rem">Member Profile<br>Successfully Saved!<br><i class="fas fa-check-square fa-lg my-4"></i></h1>
+                    <a href="{% url 'members_home' %}"><button class="btn btn-outline-secondary mt-1 mb-5" type="button">Return</button></a>
+                    {% else %}
+                        <h1 class="display-4 text-danger align-middle mt-4 mb-2" style="font-size: 2.1rem">Attempt to Save Profile<br>Has Failed!<br><i class="fas fa-exclamation-triangle text-white mt-4 mb-3"></i></h1>
+                        {% if captcha_return %}
+                            <p class="text-warning">Something went wrong<br>Please check input</p>
+                            <a href="javascript:history.back()"><button class="btn btn-outline-secondary mt-3 mb-5" type="button">Try Again</button></a>
+                        {% else %}
+                            <p class="text-warning mb-5">reCAPTCHA Security Authorisation Fail!</p>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <div class="container text-center text-lg-left">
+            <img src="{% static 'logo.png' %}" width=240 class="mx-4 mb-5">
+        </div>
+
+    </div>
+
+    {% endblock %}

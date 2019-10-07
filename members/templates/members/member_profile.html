@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<img src="{% static 'members.png' %}" class="image-fluid" id="bg"/>
+<div id="home-section">
+    <div class="container text-right">
+        <h1 class="display-4 text-white text-lg-left mt-5">Member Profile</h1>
+        <hr style="border: 0.5px solid white;"/>
+    </div>
+    <div class="container text-right" style="opacity: 0.9;">
+        <div class="row m-0 my-4" style="font-size: 0.9rem">
+            <div class="col-12 col-md-8 col-lg-6 p-0" style="border:1px solid cyan; box-shadow: 0px 1px 18px 3px #a1a1a1;">
+                <form role="form" method="post">
+                    {% csrf_token %}
+                    {{ captcha }}
+                    <div class="card rounded-0" style="border: 0px;">
+                        <div class="d-flex justify-content-between card-header p-0 bg-dark">
+                            <div class="text-white text-left px-4">
+                                <h1 class="display-5 text-white" style="font-size: 2rem;"><i class="fas fa-user-lock mr-2 mt-3 text-info"></i><strong>{{ user.username }}</strong></h1>
+                            </div>
+                            <div class="text-white text-right py-1 px-4">
+                                <h1 class="display-4 mt-2" style="font-size: 2.2rem;"><i class="fab fa-wpforms"></i></h1>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-user-circle text-info"></i></div>
+                                    </div>
+                                    <input type="text" class="form-control" id="nickame" name="nickname" placeholder="Nickname" required {{ user.nickname|safe }}>
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-user-check fa-sm text-info"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control mr-2" id="first_name" name="first_name" placeholder="First Name" {{ user.first_name|safe }} style="width: 213px;" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-user-check fa-sm text-info"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" {{ user.last_name|safe }} style="width: 213px;" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
+                                    </div>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" {{ user.email|safe }} required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-phone text-info"></i></div>
+                                    </div>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="07921-555-555" {{ user.phone|safe }} required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-chalkboard-teacher text-info fa-sm"></i></div>
+                                    </div>
+                                    <select class="form-control" id="sector" name="sector" required>
+                                        {% if user.sector %}
+                                        <option value="{{ user.sector_value }}">{{ user.sector }}</option>
+                                        {% else %}
+                                        <option hidden>Industry Sector</option>
+                                        {% endif %}
+                                        <option value="10">Institution Chef</option>
+                                        <option value="12">Banqueting Chef</option>
+                                        <option value="20">Pub Chef</option>
+                                        <option value="25">GatroPub Chef</option>
+                                        <option value="35">Fine Dining Level Chef</option>
+                                        <option value="50">Rosette Level Chef</option>
+                                        <option value="80">Michelin Level Chef</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-layer-group text-info"></i></div>
+                                        </div>
+                                        <select class="form-control mr-2" id="level" name="level" style="width: 213px;" required>
+                                            {% if user.level %}
+                                            <option value="{{ user.level_value }}">{{ user.level }}</option>
+                                            {% else %}
+                                            <option hidden>Current Level</option>
+                                            {% endif %}
+                                            <option value="1">Demi Chef</option>
+                                            <option value="2">CDP Chef</option>
+                                            <option value="3">Sous Chef</option>
+                                            <option value="4">Head Chef</option>
+                                            <option value="5">Exec Chef</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"><i class="fas fa-business-time text-info"></i></div>
+                                        </div>
+                                        <select class="form-control" id="years" name="years" style="width: 105px;" required>
+                                            {% if user.years %}
+                                            <option>{{ user.years }}</option>
+                                            {% else %}
+                                            <option hidden>0</option>
+                                            {% endif %}
+                                            {% for year in user.years_range %}
+                                            <option>{{ year }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">Years Active</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-book text-info"></i></div>
+                                    </div>
+                                    <textarea class="form-control" id="bio" name="bio" placeholder="Short Bio" required style="resize: none; height: 92px;">{{ user.bio }}</textarea>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark btn-block rounded-3 py-2"><i class="fas fa-cloud-upload-alt mr-2"></i>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container text-center text-lg-left">
+            <img src="{% static 'logo.png' %}" width=240 class="mx-4 mb-5">
+        </div>
+
+    </div>
+
+    {% endblock %}
